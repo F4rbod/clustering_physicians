@@ -97,8 +97,11 @@ find_all_diagnosis <- function(data) {
         mc.cores = numcores
     )
 
-    # combine the data back
-    data <- rbindlist(data_split, use.names = T, fill = TRUE)
+    # combine the data back using a for loop
+    data <- data.table()
+    for (i in 1:length(data_split)) {
+        data <- rbind(data, data_split[[i]], fill = TRUE)
+    }
 
     # replace NA with 0
 
@@ -111,7 +114,6 @@ inpatient_data_wide <- find_all_diagnosis(inpatient_data)
 outpatient_data_wide = find_all_diagnosis(outpatient_data)
 
 # create a similar function for carrier data
-
 find_all_diagnosis_carrier <- function(data) {
     data <- data[, .(
         id = id,
@@ -140,8 +142,11 @@ find_all_diagnosis_carrier <- function(data) {
         mc.cores = numcores
     )
 
-    # combine the data
-    data <- rbindlist(data_split, use.names = T, fill = T)
+    # combine the data back using a for loop
+    data <- data.table()
+    for (i in 1:length(data_split)) {
+        data <- rbind(data, data_split[[i]], fill = TRUE)
+    }
 
     # replace NA with 0
 
