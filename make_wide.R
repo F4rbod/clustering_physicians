@@ -1,4 +1,4 @@
-numcores <- 128
+numcores <- 8
 
 library(tidyverse)
 library(parallel)
