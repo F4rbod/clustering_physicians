@@ -3,9 +3,9 @@
 #SBATCH --partition=short
 #SBATCH --nodes=1
 #SBATCH --ntasks 1
-#SBATCH --cpus-per-task 8
+#SBATCH --cpus-per-task 7
 #SBATCH --time=24:00:00
-#SBATCH --mem=1.8T
+#SBATCH --mem=1400G
 #SBATCH --export=ALL
 #SBATCH --constraint="zen2|cascadelake"
 
