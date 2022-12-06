@@ -157,11 +157,33 @@ find_all_diagnosis_carrier <- function(data) {
 
 carrier_data_wide = find_all_diagnosis_carrier(carrier_data)
 
+# save the data
+write.fst(
+    inpatient_data_wide,
+    "/work/postresearch/Shared/Projects/Farbod/Clustering/inpatient_data_wide.fst"
+)
+write.fst(
+    outpatient_data_wide,
+    "/work/postresearch/Shared/Projects/Farbod/Clustering/outpatient_data_wide.fst"
+)
+write.fst(
+    carrier_data_wide,
+    "/work/postresearch/Shared/Projects/Farbod/Clustering/carrier_data_wide.fst"
+)
 
-# Now, let's merge the data on the id and year
 
-wide_data <- full_join(outpatient_data_wide, inpatient_data_wide, by = c("id", "year"))
-wide_data <- full_join(wide_data, carrier_data_wide, by = c("id", "year")) %>% as.data.table()
+# Now, let's put things together
+
+# list data
+data_list = list(inpatient_data_wide, outpatient_data_wide, carrier_data_wide)
+# rbind
+wide_data = rbindlist(data_list, fill = TRUE)
+# sum based on year and id
+wide_data <-
+    wide_data %>%
+    group_by(id, year) %>%
+    summarise_all(sum, na.rm = TRUE) %>%
+    as.data.table()
 
 # change NA to 0
 
