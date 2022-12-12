@@ -34,7 +34,7 @@ model_death_next_year_pcp <- glmer(
         cluster_severity_group *
             quintile +
         (1 | cluster),
-    data = modelling_data[provider_specialty %in% c("01", "08", "11", "38") & top_physician == 1],
+    data = modelling_data[died_2016_2017 %in% c(0, 1)][provider_specialty %in% c("01", "08", "11", "38") & top_physician == 1],
     family = binomial(link = "logit"),
     control = glmerControl(optimizer = "bobyqa", calc.derivs = FALSE)
 )
